@@ -1,0 +1,8 @@
+{
+    "cmake.configureOnOpen": false,
+    "C_Cpp.autoAddFileAssociations": false,
+    // So that $LANG is not set, it causes problems with nrfjprog and thus west flash
+    "terminal.integrated.detectLocale": "off",
+    "editor.formatOnSave": true,
+    "terminal.integrated.scrollback": 2000
+}

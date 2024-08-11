@@ -1,0 +1,51 @@
+# Project specific west.yml that imports NRF-SDK west.yml
+manifest:
+  # remotes specify the different sources from where we want to import modules.
+  remotes:
+    # NCS is the location for the Nordic SDK we need for our boards.
+    - name: ncs
+      url-base: https://github.com/nrfconnect
+    # This is the Zephyr repository source.
+    - name: zephyr
+      url-base: https://github.com/zephyrproject-rtos
+  projects:
+    # Here, we specify all the projects we want (Nordic SDK and Zephyr) as well as their versions.
+    - name: nrf
+      repo-path: sdk-nrf
+      remote: ncs
+      revision: v2.4.2
+      import: true
+    - name: zephyr
+      remote: ncs
+      repo-path: sdk-zephyr
+      path: zephyr
+      revision: v3.3.99-ncs1-1
+
+      import:
+        # Those are other modules we install like the Nordic hardware abstraction layer.
+        name-allowlist:
+          - TraceRecorderSource
+          - canopennode
+          - civetweb
+          - cmsis
+          - edtt
+          - fatfs
+          - hal_nordic
+          - libmetal
+          - littlefs
+          - loramac-node
+          - lvgl
+          - lz4
+          - mbedtls
+          - mcumgr
+          - mipi-sys-t
+          - nanopb
+          - net-tools
+          - nrf_hw_models
+          - open-amp
+          - openthread
+          - segger
+          - tinycbor
+          - tinycrypt
+  self:
+    path: hka-embedded-iot

@@ -1,0 +1,18 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceRoot}/iiot_main_firmware/build/zephyr/zephyr.elf",
+			      "gdbPath": "${env:ZEPHYR_TOOLCHAIN_PATH}/arm-zephyr-eabi/bin/arm-zephyr-eabi-gdb",
+            "name": "Debug Microcontroller",
+            "request": "attach",
+            "type": "cortex-debug",
+            "servertype": "jlink",
+            "device": "nRF9160",
+            "interface": "swd",
+            "svdFile": "${env:WEST_WORKSPACE_CONTAINER}/modules/hal/nordic/nrfx/mdk/nrf9160.svd",
+            "runToEntryPoint": "main"
+        }
+	]
+}

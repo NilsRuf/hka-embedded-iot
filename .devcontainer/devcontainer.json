@@ -1,0 +1,54 @@
+{
+  "initializeCommand": "mkdir -p .west_workspace && cd .container-env && docker build --network host --tag zephyr-box-hka .",
+  "_initializeCommand": "mkdir -p .west_workspace",
+  "image": "zephyr-box-hka",
+  "postStartCommand": "/home/user/entrypoint.sh",
+  "remoteUser": "user",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "python.pythonPath": "${env:WEST_WORKSPACE_CONTAINER}/.pyEnv/bin/python",
+        "terminal.integrated.profiles.linux": {
+          "serial_terminal": {
+            "icon": "terminal",
+            "overrideName": true,
+            "path": "/usr/bin/minicom",
+            "args": [
+              "--color=on",
+            ]
+          }
+        }
+      },
+      "extensions": [
+        "mhutchie.git-graph",
+        "ms-vscode.cpptools",
+        "nordic-semiconductor.nrf-devicetree",
+        "nordic-semiconductor.nrf-kconfig",
+        "mcu-debug.debug-tracker-vscode",
+        "mcu-debug.memory-view",
+        "mcu-debug.rtos-views",
+        "mcu-debug.peripheral-viewer",
+        "marus25.cortex-debug@1.6.10",
+        "ms-python.python",
+        "ms-vscode.cpptools-extension-pack"
+      ]
+    }
+  },
+  "mounts": [
+    "type=bind,source=${localWorkspaceFolder}/.west_workspace,target=/opt/zephyrproject",
+    "type=bind,source=${localWorkspaceFolder},target=/opt/zephyrproject/hka-embedded-iot",
+    "type=bind,source=/dev,target=/dev",
+  ],
+  "workspaceFolder": "/opt/zephyrproject/hka-embedded-iot",
+  "containerEnv": {
+    "WEST_WORKSPACE_CONTAINER": "/opt/zephyrproject",
+    "WORKDIR_CONTAINER": "/opt/zephyrproject/hka-embedded-iot",
+    "DOCKER_USER_UID": "$(id -u $(whoami))",
+    "DOCKER_USER_GID": "$(id -g $(whoami))"
+  },
+  "privileged": true,
+  "runArgs": [
+    "--network",
+    "host"
+  ]
+}
