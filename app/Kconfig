@@ -5,6 +5,14 @@ menu "Zephyr Kernel"
 source "Kconfig.zephyr"
 endmenu
 
-config BLINK_INTERVAL_MS
-    int "Sample configuration option to set the LED blink interval in milliseconds."
+config BLINK_INTERVAL_GREEN_MS
+    int "Sample configuration option to set the green LED blink interval in milliseconds."
+    default 500
+
+config BLINK_INTERVAL_BLUE_MS
+    int "Sample configuration option to set the blue LED blink interval in milliseconds."
+    default 500
+
+config BLINK_INTERVAL_RED_MS
+    int "Sample configuration option to set the red LED blink interval in milliseconds."
     default 500

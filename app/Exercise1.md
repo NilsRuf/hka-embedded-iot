@@ -18,10 +18,3 @@ Look up the devicetree of the board to find which one it is.
 Configure the button to trigger an interrupt when pressed. You may find useful resources on how to do that [here](https://docs.zephyrproject.org/latest/hardware/peripherals/gpio.html).
 When the button is pressed, all LEDs should stop blinking.
 When pressed again, the original blinking pattern should start.
-
-## Task 4: Using the color sensors
-The Thingy91 also has color sensors (three of them for each color).
-Find out how to control them and take measurements in specific intervals.
-Log the measurements with the logging API.
-
-Hint: The color sensors are also controlled using GPIOs.

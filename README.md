@@ -18,6 +18,19 @@ In order to build for the first time, execute the following command inside the `
 west build -p -b thingy91_nrf9160
 ```
 
+If you have the NRF9160DK use the following command:
+```bash
+west build -p -b nrf9160dk_nrf9160
+```
+
+
 To rebuild the app, a simple `west build` or `west flash` is needed.
 
 To flash the application onto the device use `west flash`.
+
+## Note for Windows users
+If you are flashing on Windows using `nrfjprog` use this command from a Windows terminal inside the app directory:
+
+```bash
+nrfjprog -f NRF91 --sectorerase --reset --verify --program .\\build\\zephyr\\zephyr.hex
+```
