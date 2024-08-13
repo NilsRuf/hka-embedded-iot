@@ -20,6 +20,6 @@ K_THREAD_DEFINE(
     comm_thread,
     CONFIG_COMM_THREAD_STACK_SIZE,
     comm_handler, NULL, NULL, NULL,
-    CONFIG_COMM_THREAD_PRIO, 0, K_NO_WAIT);
+    CONFIG_COMM_THREAD_PRIO, 0, 0);
 
 // TODO: Use the Zephyr UART API (does not matter which one) to send data.

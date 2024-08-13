@@ -20,7 +20,7 @@ K_THREAD_DEFINE(
     env_sens_thread,
     CONFIG_SENSOR_THREAD_STACK_SIZE,
     sensor_handler, NULL, NULL, NULL,
-    CONFIG_SENSOR_THREAD_PRIO, 0, K_NO_WAIT);
+    CONFIG_SENSOR_THREAD_PRIO, 0, 0);
 
 // Sensor handler takes periodic measurements.
 void sensor_handler(void *_u1, void *_u2, void *_u3)
