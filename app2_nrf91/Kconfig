@@ -25,3 +25,15 @@ config COMM_THREAD_STACK_SIZE
 config COMM_THREAD_PRIO
     int "Priority of the comm thread."
     default 10
+
+config COMM_MSGQ_SIZE
+    int "Size of the comm module message queue."
+    default 4
+
+config TEMPERATURE_MAX_GOOD
+    int "Maximum temperature (in degrees celsius) which is considered good."
+    default 20
+
+config TEMPERATURE_MAX_OKAY
+    int "Maximum temperature (in degrees celsius) which is considered okay."
+    default 25

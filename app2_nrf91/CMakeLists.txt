@@ -7,10 +7,9 @@ project(NONE)
 
 target_sources(app PRIVATE
     src/main.c
-    # src/channels.c
-    # src/comm.c
+    src/comm.c
     src/env_sensor.c
-    # src/io.c
+    src/io.c
 )
 
 # Enable more warnings
