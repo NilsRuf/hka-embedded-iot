@@ -1,0 +1,14 @@
+# Kconfig files are for defining custom configuration options.
+# A config option MY_FOO is available in code as a preprocessor define called CONFIG_MY_FOO.
+
+menu "Zephyr Kernel"
+source "Kconfig.zephyr"
+endmenu
+
+config COMM_THREAD_STACK_SIZE
+    int "Size of the comm thread stack"
+    default 2048
+
+config COMM_THREAD_PRIO
+    int "Priority of the comm thread."
+    default 10

@@ -1,0 +1,8 @@
+// In an overlay file you can define alternate configurations for your applications.
+// You can, for example, enable or disable specific peripherals or remap them to different pins.
+
+/ {
+    chosen {
+        zephyr,bt-uart = &uart1;
+    };
+};
