@@ -1,0 +1,19 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/lab*/**",
+                "${workspaceFolder}/lab*/build/zephyr/include/generated/**",
+                "${env:ZEPHYR_BASE}/include/**"
+            ],
+            "defines": [],
+            "compilerPath": "${env:ZEPHYR_TOOLCHAIN_PATH}/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-arm",
+            "configurationProvider": "vector-of-bool.cmake-tools",
+            "cStandard": "c11"
+        }
+    ],
+    "version": 4
+}

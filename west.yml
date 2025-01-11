@@ -1,0 +1,27 @@
+# Project specific west.yml that imports NRF-SDK west.yml
+manifest:
+  # Remotes specify the different sources from where we want to import modules.
+  remotes:
+    # This is the Zephyr repository source.
+    - name: zephyr
+      url-base: https://github.com/zephyrproject-rtos
+  projects:
+    # Here, we specify all the projects we want (we only need Zephyr) as well as their versions.
+    - name: zephyr
+      remote: zephyr
+      repo-path: zephyr
+      path: zephyr
+      revision: v4.0.0
+
+      import:
+        # Those are third-party modules we install additionally like the LoRaMAC nocde library.
+        name-allowlist:
+          - mbedtls
+          - cmsis
+          - hal_stm32
+          - hal_st
+          - segger
+          - loramac-node
+
+  self:
+    path: hka-embedded-iot

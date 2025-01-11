@@ -1,0 +1,18 @@
+# Kconfig files are for defining custom configuration options.
+# A config option MY_FOO is available in code as a preprocessor define called CONFIG_MY_FOO.
+
+menu "Zephyr Kernel"
+source "Kconfig.zephyr"
+endmenu
+
+config BLINK_INTERVAL_MS
+    int "Sample configuration option to set the green LED blink interval in milliseconds."
+    default 500
+
+config ENV_SENSOR_CLIMATE_UPDATE_INTERVAL_MS
+    int "Update interval of the climate sensor in milliseconds."
+    default 1000
+
+config MOCK_ENV_SENSORS
+    bool "Mocks the environmental sensors because I2C is not working properly with new revision."
+    default n
