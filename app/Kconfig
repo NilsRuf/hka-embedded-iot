@@ -9,6 +9,10 @@ config BLINK_INTERVAL_MS
     int "Sample configuration option to set the green LED blink interval in milliseconds."
     default 500
 
+config PRESS_TIME_SHORT_MS
+    int "Maximum duration of a short press."
+    default 500
+
 config ENV_SENSOR_CLIMATE_UPDATE_INTERVAL_MS
     int "Update interval of the climate sensor in milliseconds."
     default 1000

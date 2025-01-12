@@ -21,8 +21,4 @@ int env_sensor_climate_init(void);
 /// \return 0 on success or negative errno code.
 int env_sensor_climate_get(struct env_sensor_climate_sample *sample);
 
-/// Initializes the light sensor.
-/// \return 0 on success or negative errno code.
-int env_sensor_ldo_init(void);
-
 #endif
