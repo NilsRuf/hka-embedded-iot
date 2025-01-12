@@ -20,3 +20,17 @@ config ENV_SENSOR_CLIMATE_UPDATE_INTERVAL_MS
 config MOCK_ENV_SENSORS
     bool "Mocks the environmental sensors because I2C is not working properly with new revision."
     default n
+
+# ==================================================================================================
+# ------------------------------------- Thread configuration ------------------------------------- #
+# ==================================================================================================
+
+# ---------------------------------------- Sender thread ----------------------------------------- #
+
+config SENDER_THREAD_STACK_SIZE
+    int "Thread stack size for sender thread."
+    default 4096
+
+config SENDER_THREAD_PRIO
+    int "Thread stack size for sender thread."
+    default 4

@@ -1,11 +1,13 @@
 // This file conains our application's entry point.
 
 #include "zephyr/sys/time_units.h"
+#include "zephyr/zbus/zbus.h"
 #include <zephyr/device.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 
+#include <channels.h>
 #include <env_sensor.h>
 
 // We register a log module here so we can use LOG_INF, LOG_ERR, etc. in this
@@ -37,6 +39,12 @@ static enum button_state {
 // Time when the button was pressed the last time.
 static k_ticks_t m_last_pressed = 0;
 
+// Structure defining the work context for publishing a button press message.
+static struct press_duration_context {
+    struct k_work work;
+    uint32_t press_duration_ms;
+} m_press_duration_context;
+
 /* ------------------------------------ Function prototypes ------------------------------------- */
 
 // Configures the LED.
@@ -56,6 +64,9 @@ static void trigger_measurement(struct k_timer *timer);
 
 // Takes a sensor measurement and logs the result.
 static void take_measurement(struct k_work *work);
+
+// Publishes a button press duration.
+static void publish_press_duration(struct k_work *work);
 
 // Timer for the LED.
 K_TIMER_DEFINE(m_my_timer, on_led_timer_expired, NULL);
@@ -79,18 +90,23 @@ int main(void)
         return 0;
     }
 
+    // Initizlize the button work item before the button reacts to interrupts.
+    k_work_init(&m_press_duration_context.work, publish_press_duration);
+
     err = configure_button(&m_button_spec, &m_button_callback);
     if (err != 0) {
         LOG_ERR("failed to configure button: %d", err);
         return 0;
     }
 
+    // Initialize the climate sensor (should be done in an appropriate module).
     err = env_sensor_climate_init();
     if (err != 0) {
         LOG_ERR("failed to init climate sensor: %d", err);
         return 0;
     }
 
+    // Start the timers for LEDs and measurements. The latter one should be in another module.
     k_timer_start(&m_my_timer, K_NO_WAIT, LED_TIMEOUT);
     k_timer_start(&m_msmt_timer, K_NO_WAIT, K_MSEC(CONFIG_ENV_SENSOR_CLIMATE_UPDATE_INTERVAL_MS));
 
@@ -189,6 +205,10 @@ static void on_button_change(const struct device *dev, struct gpio_callback *cb,
         LOG_INF("long press: %lldms", press_time_ms);
     }
 
+    // Publish the message inside a work queue and not in an interrupt handler.
+    m_press_duration_context.press_duration_ms = (uint32_t)press_time_ms;
+    k_work_submit(&m_press_duration_context.work);
+
     static enum {LED_STATE_ON, LED_STATE_OFF} state = LED_STATE_ON;
 
     if (state == LED_STATE_ON) {
@@ -225,5 +245,21 @@ static void take_measurement(struct k_work *work)
                 climate_sample.temperature_celsius.val2,
                 climate_sample.humidity_percent.val1,
                 climate_sample.humidity_percent.val2);
+    }
+}
+
+static void publish_press_duration(struct k_work *work)
+{
+    struct press_duration_context *ctx = CONTAINER_OF(work, struct press_duration_context, work);
+    struct sender_message msg = {
+        .type = SENDER_MSG_TYPE_PRESS_DURATION,
+        .press_duration_ms = ctx->press_duration_ms,
+    };
+
+    int err = zbus_chan_pub(&g_sender_chan, &msg, K_MSEC(500));
+    if (err) {
+        LOG_ERR("failed to publish press duration: %d", err);
+    } else {
+        LOG_INF("published press duration: %u", msg.press_duration_ms);
     }
 }

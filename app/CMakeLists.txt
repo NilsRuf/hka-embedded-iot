@@ -7,7 +7,8 @@ project(NONE)
 
 target_sources(app PRIVATE
     src/main.c
-    src/env_sensor.c)
+    src/env_sensor.c
+    src/sender.c)
 
 # Add everything under include/ to the include path.
 zephyr_include_directories(include)
